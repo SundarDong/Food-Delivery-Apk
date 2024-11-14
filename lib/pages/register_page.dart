@@ -5,7 +5,7 @@ import 'package:food_delivery_app/components/my_textfield.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function() ? onTap;
-  
+
   const RegisterPage({
     super.key,
     required this.onTap,
@@ -32,14 +32,14 @@ class _RegisterPageState extends State<RegisterPage> {
           children: [
             //logo 
             Icon(
-              Icons.lock_open_rounded,
+              Icons.person,
               size: 100,
               color: Theme.of(context).colorScheme.inversePrimary,
             ),
             const SizedBox( height: 25,),
 
             //message,app slogan
-            Text("Let's create new Account",
+            Text("Let's create an account for you",
             style: TextStyle(
               fontSize: 16,
               color: Theme.of(context).colorScheme.inversePrimary,
