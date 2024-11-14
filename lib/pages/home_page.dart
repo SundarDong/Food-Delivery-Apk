@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/components/my_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,7 +14,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Homepage"),
-      ),
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        ),
+        drawer: const MyDrawer(),
     );
   }
 }
