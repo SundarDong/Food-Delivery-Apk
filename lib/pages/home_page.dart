@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/components/my_current_location.dart';
 import 'package:food_delivery_app/components/my_description.dart';
 import 'package:food_delivery_app/components/my_drawer.dart';
+import 'package:food_delivery_app/components/my_food_tile.dart';
 import 'package:food_delivery_app/components/my_tab_bar.dart';
 import 'package:food_delivery_app/models/food.dart';
 import 'package:food_delivery_app/models/restaurant.dart';
@@ -38,17 +39,23 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   List<Widget> getFoodInThisCategory(List<Food> fullMenu) {
   return FoodCategory.values.map((category) {
-    // Filter the full menu based on the current category
+
+    // get category menu
     List<Food> categoryMenu = _filterMenuCategory(category, fullMenu);
 
     // Return the ListView for each category
     return ListView.builder(
       itemCount: categoryMenu.length,
       physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(categoryMenu[index].name),
-        );
+
+        //to get individual food
+        final food =categoryMenu[index];
+        return MyFoodTile(
+          food: food,
+          onTap: (){},
+          );
       },
     );
   }).toList(); // Ensure you return the list of widgets

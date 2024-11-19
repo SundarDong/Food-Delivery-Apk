@@ -84,7 +84,7 @@ class Restaurant extends ChangeNotifier {
       Food(
         name: "Classic Cheesecake",
         descriptions: "A rich and creamy cheesecake with a buttery graham cracker crust, topped with your choice of sauce.",
-        imagePath: "lib/images/desserts/Db.jpeg.jpg",
+        imagePath: "lib/images/desserts/Db.jpeg",
         price: 300,
         category: FoodCategory.desserts,
         availableAddons: [
