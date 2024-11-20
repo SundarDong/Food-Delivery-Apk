@@ -26,7 +26,7 @@ class MyFoodTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(food.name),
-                      Text("\Rs." + food.price.toString(),
+                      Text("\Rs.${food.price}",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                       ),
