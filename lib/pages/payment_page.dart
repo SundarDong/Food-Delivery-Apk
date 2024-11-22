@@ -37,6 +37,7 @@ class _PaymentPageState extends State<PaymentPage> {
               ],
             ),
           ),
+          
           actions: [
             //cancel button 
             TextButton(
@@ -46,9 +47,12 @@ class _PaymentPageState extends State<PaymentPage> {
 
             //yes button 
              TextButton(
-              onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> const DeliveryProgressPage(),
+              onPressed: (){
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> const DeliveryProgressPage(),
               ),
-            ),
+              );
+             },
               child: const Text("Yes"),
               ),
 
@@ -100,10 +104,13 @@ class _PaymentPageState extends State<PaymentPage> {
 
             const Spacer(),
 
-            MyButton(
-              text: "Pay now", 
-              onTap: userTappedPay,
-              )
+            SafeArea(
+              child: MyButton(
+                text: "Pay now", 
+                onTap: userTappedPay,
+              ),
+            ),
+            const SizedBox(height: 15),
         ],
       ),
     );
