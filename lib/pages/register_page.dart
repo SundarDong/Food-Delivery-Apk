@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/components/my_button.dart';
 import 'package:food_delivery_app/components/my_textfield.dart';
+import 'package:food_delivery_app/services/auth/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
-  final void Function() ? onTap;
+  final void Function()? onTap;
 
   const RegisterPage({
     super.key,
@@ -16,96 +16,139 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController= TextEditingController();
-  final TextEditingController confirmpasswordController= TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmpasswordController = TextEditingController();
+
+  // Register method
+  void register() async {
+    // Get auth service
+    final _authService = AuthService();
+
+    // Check if passwords match
+    if (passwordController.text == confirmpasswordController.text) {
+      try {
+        // Try creating user
+        await _authService.signUpWithEmailPassword(
+          emailController.text,
+          passwordController.text,
+        );
+
+        // Show success dialog
+        showDialog(
+          context: context,
+          builder: (context) => const AlertDialog(
+            title: Text("Success"),
+            content: Text("Account created successfully!"),
+          ),
+        );
+      } catch (e) {
+        // Display error dialog
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Error"),
+            content: Text(e.toString()),
+          ),
+        );
+      }
+    } else {
+      // If passwords don't match, show error
+      showDialog(
+        context: context,
+        builder: (context) => const AlertDialog(
+          title: Text("Error"),
+          content: Text("Passwords don't match"),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //logo 
-            Icon(
-              Icons.person,
-              size: 100,
-              color: Theme.of(context).colorScheme.inversePrimary,
-            ),
-            const SizedBox( height: 25,),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Logo
+              Icon(
+                Icons.person,
+                size: 100,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+              const SizedBox(height: 25),
 
-            //message,app slogan
-            Text("Let's create an account for you",
-            style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).colorScheme.inversePrimary,
-            ),
-            ),
-            const SizedBox(height: 25),
-        
+              // Message, app slogan
+              Text(
+                "Let's create an account for you",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                ),
+              ),
+              const SizedBox(height: 25),
 
-            //email textfield
-           MyTextfield(
+              // Email textfield
+              MyTextfield(
                 controller: emailController,
                 hintText: "Email",
                 obscureText: false,
               ),
               const SizedBox(height: 25),
-        
-            //password textfiled
-             MyTextfield(
+
+              // Password textfield
+              MyTextfield(
                 controller: passwordController,
                 hintText: "Password",
                 obscureText: true,
               ),
               const SizedBox(height: 25),
 
-                //confrimpassword textfiled
-             MyTextfield(
+              // Confirm password textfield
+              MyTextfield(
                 controller: confirmpasswordController,
                 hintText: "Confirm Password",
                 obscureText: true,
               ),
               const SizedBox(height: 25),
 
-        
-            //sign up button 
+              // Sign up button
               MyButton(
-                text: "Sign Up", 
-                onTap: (){},
-                ),
-                const SizedBox(height: 25),
-        
-        
-            //already have an account ? Login here
-           Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("already have an account ?",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                ),
-                ),
-                const SizedBox(width: 4),
+                text: "Sign Up",
+                onTap: register, // Call the register method here
+              ),
+              const SizedBox(height: 25),
 
-                GestureDetector(
-                  onTap: widget.onTap ,
-                  child: Text("Login Now",
-                  style: TextStyle(
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  fontWeight: FontWeight.bold,
+              // Already have an account? Login here
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Already have an account?",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                    ),
                   ),
+                  const SizedBox(width: 4),
+                  GestureDetector(
+                    onTap: widget.onTap,
+                    child: Text(
+                      "Login Now",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                )
-              ],
-            )
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-    ); 
+    );
   }
 }
