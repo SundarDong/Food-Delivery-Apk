@@ -1,27 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/models/restaurant.dart';
+import 'package:provider/provider.dart';
 
 class MyCurrentLocation extends StatelessWidget {
-  const MyCurrentLocation({super.key});
+  MyCurrentLocation({super.key});
+
+  // Declare the TextEditingController
+  final TextEditingController textController = TextEditingController();
 
   void openLocationSearchBox(BuildContext context){
     showDialog(
       context: context,
        builder: (context)=> AlertDialog(
         title: const Text("Your location"),
-        content: const TextField(
-          decoration:InputDecoration(
-            hintText: "Search address..",
+        content: TextField(
+          controller: textController,
+          decoration: const InputDecoration(
+            hintText: "Enter address..",
           ),
         ),
         actions: [
           //cancel
-          MaterialButton(onPressed: ()=> Navigator.pop(context),
+          MaterialButton(onPressed: (){
+            Navigator.pop(context);
+            textController.clear();
+          },
           child: const Text("Cancel"),
           ),
 
           //save
-          MaterialButton(onPressed: ()=> Navigator.pop(context),
-          child: const Text("Save"),
+          MaterialButton(onPressed: (){
+            //update delivery address 
+            String newAddress = textController.text;
+            context.read<Restaurant>().updateDeliveryAddress(newAddress);
+            Navigator.pop(context);
+            textController.clear();
+          },
+          child:Text("Save"),
           )
         ],
        ),
@@ -43,12 +58,15 @@ class MyCurrentLocation extends StatelessWidget {
             child: Row(
               children: [
                 //address
-                  Text(
-                     "44601 Kathmandu",
-                      style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary,
+                 Consumer<Restaurant>(
+                  builder: (context, restaurant, child)=> Text(
+                    restaurant.deliveryAddress,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
                       fontWeight: FontWeight.bold,
-                      ),
-                   ),
+                    ),
+                  ),
+                 ),
                 //drop down menu
                 const Icon(Icons.keyboard_arrow_down_rounded),
               ],

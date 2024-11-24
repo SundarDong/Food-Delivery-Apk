@@ -23,13 +23,13 @@ class _RegisterPageState extends State<RegisterPage> {
   // Register method
   void register() async {
     // Get auth service
-    final _authService = AuthService();
+    final authService = AuthService();
 
     // Check if passwords match
     if (passwordController.text == confirmpasswordController.text) {
       try {
         // Try creating user
-        await _authService.signUpWithEmailPassword(
+        await authService.signUpWithEmailPassword(
           emailController.text,
           passwordController.text,
         );

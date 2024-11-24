@@ -8,6 +8,8 @@ class Restaurant extends ChangeNotifier {
   //list of food menu
 
    final List<Food> _menu =[
+
+    
     
     //burgers
   Food(
@@ -148,18 +150,21 @@ class Restaurant extends ChangeNotifier {
         ),
 
    ];
+    //user cart
+    final List <CartItem> _cart=[];
+
+    //delivery address
+    String _deliveryAddress ='44601 Kathmandu';
 
    //getters
    List<Food> get menu => _menu;
    List<CartItem> get cart => _cart;
+   String get deliveryAddress => _deliveryAddress;
    
 
 /*
 operations
 */
-
-//user cart
-final List <CartItem> _cart=[];
 
 //add to carts
 void addToCart(Food food, List<Addon> selectedAddons){
@@ -236,7 +241,11 @@ void clearCart(){
   notifyListeners();
 }
 
-
+//update delivery address
+void updateDeliveryAddress(String newAddress){
+  _deliveryAddress= newAddress;
+  notifyListeners();
+}
 
 /* helpers */
 //generate receipt
@@ -264,6 +273,8 @@ String displayCartReceipt(){
   receipt.writeln();
   receipt.writeln("Total Items: ${getTotalItemCount()}");
   receipt.writeln("Total Price: ${_formatPrice(getTotalPrice())}");
+  receipt.writeln();
+  receipt.writeln("Delivery to: $deliveryAddress");
   
   return receipt.toString();
 }
