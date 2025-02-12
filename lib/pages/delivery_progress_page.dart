@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/components/my_cart_tile.dart';
 import 'package:food_delivery_app/components/my_receipt.dart';
 import 'package:food_delivery_app/models/restaurant.dart';
 import 'package:food_delivery_app/services/database/firestore.dart';

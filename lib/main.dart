@@ -9,25 +9,21 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(
-    MultiProvider(providers: [
-      
+  runApp(MultiProvider(
+    providers: [
       //theme provider
-      ChangeNotifierProvider(create: (context)=>ThemeProvider()),
+      ChangeNotifierProvider(create: (context) => ThemeProvider()),
 
       //restaurant provider
       //theme provider
-      ChangeNotifierProvider(create: (context)=>Restaurant()),
+      ChangeNotifierProvider(create: (context) => Restaurant()),
     ],
     child: const MyApp(),
-    )
-  );
+  ));
 }
- 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
@@ -40,4 +36,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

@@ -1,0 +1,6 @@
+build
+.git
+.ios
+.android
+.pub-cache
+.dart_tool
